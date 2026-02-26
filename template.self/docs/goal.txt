@@ -1,0 +1,17 @@
+Goal: Define and evolve the Selfware protocol and its agent-ready workspace conventions.
+
+Primary Objective:
+- Keep protocol docs (`selfware.md` and `selfware-zh.md`) accurate and reviewable.
+- Make the workspace executable by both humans and agents via entrypoint definitions and file governance.
+
+Current Sprint Goal:
+- Establish the first collaboration protocol structure.
+- Validate one end-to-end run with entrypoint/scripts/new-task.ps1 and entrypoint/scripts/new-run.ps1.
+
+Constraints:
+- No silent apply for protocol-level changes.
+- Sensitive files (for example, .env) are human-only.
+- Any change to governance/*, entrypoint/*, or selfware*.md requires human discussion.
+
+Owner: human
+Last-Reviewed: 2026-02-26

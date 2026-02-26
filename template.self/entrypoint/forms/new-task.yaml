@@ -1,0 +1,19 @@
+version: 1
+id: new_task
+title: New Task
+fields:
+  - id: task_id
+    type: text
+    label: Task ID
+    required: true
+    placeholder: TASK-001
+  - id: title
+    type: text
+    label: Title
+    required: true
+    placeholder: Add run governance templates
+  - id: owner
+    type: text
+    label: Owner
+    required: false
+    default: human

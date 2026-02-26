@@ -1,0 +1,14 @@
+version: 1
+id: new_run
+title: New Run
+fields:
+  - id: task_id
+    type: text
+    label: Task ID
+    required: true
+    placeholder: TASK-001
+  - id: agent_id
+    type: text
+    label: Agent ID
+    required: false
+    default: default-agent

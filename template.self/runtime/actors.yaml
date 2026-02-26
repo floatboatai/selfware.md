@@ -1,0 +1,28 @@
+version: 1
+description: Runtime actor identities and allowed skill scopes.
+
+actors:
+  - id: human-owner
+    type: human
+    description: Repository owner and final decision maker.
+    policy_ref: governance/file-contract.yaml
+    allowed_skills:
+      - "*"
+
+  - id: default-agent
+    type: agent
+    description: General implementation and review agent.
+    policy_ref: governance/file-contract.yaml
+    allowed_skills:
+      - "*"
+    memory_scope:
+      read:
+        - docs/**
+        - entrypoint/**
+        - governance/**
+        - runtime/**
+        - process/**
+        - selfware*.md
+        - README*
+      write:
+        - process/runs/**

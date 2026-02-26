@@ -1,0 +1,114 @@
+version: 1
+description: File-level contract for human-agent collaboration.
+
+semantics:
+  access_values:
+    - allow
+    - deny
+    - require_discussion
+  rule_precedence: more specific glob wins; if equal specificity, later rule wins
+
+defaults:
+  agent_read: allow
+  agent_write: deny
+  agent_execute: deny
+
+required_paths:
+  - docs/goal.txt
+  - entrypoint/index.yaml
+  - governance/file-contract.yaml
+
+optional_paths:
+  - skills/**
+  - process/runs/**
+  - process/decisions/**
+  - process/tasks/**
+
+rules:
+  - glob: ".env*"
+    required: false
+    owner: human
+    agent_read: deny
+    agent_write: deny
+    agent_execute: deny
+    notes: Secret values are human-only.
+
+  - glob: "docs/goal.txt"
+    required: true
+    owner: human
+    agent_read: allow
+    agent_write: require_discussion
+    agent_execute: deny
+    notes: Goal updates require explicit human discussion.
+
+  - glob: "entrypoint/**"
+    required: true
+    owner: shared
+    agent_read: allow
+    agent_write: require_discussion
+    agent_execute: deny
+    notes: Entry points define human-agent interaction surfaces.
+
+  - glob: "entrypoint/scripts/**"
+    required: true
+    owner: shared
+    agent_read: allow
+    agent_write: require_discussion
+    agent_execute: allow
+    notes: Scripts are executable and therefore high impact.
+
+  - glob: "governance/**"
+    required: true
+    owner: shared
+    agent_read: allow
+    agent_write: require_discussion
+    agent_execute: deny
+    notes: Governance changes require explicit confirmation.
+
+  - glob: "runtime/actors.yaml"
+    required: true
+    owner: shared
+    agent_read: allow
+    agent_write: require_discussion
+    agent_execute: deny
+    notes: Actor identity and permissions are trust boundaries.
+
+  - glob: "selfware*.md"
+    required: true
+    owner: shared
+    agent_read: allow
+    agent_write: require_discussion
+    agent_execute: deny
+    notes: Protocol authority files should not be silently modified.
+
+  - glob: "skills/**"
+    required: false
+    owner: shared
+    agent_read: allow
+    agent_write: require_discussion
+    agent_execute: allow
+    notes: Skills are reusable capability bundles.
+
+  - glob: "process/tasks/**"
+    required: false
+    owner: shared
+    agent_read: allow
+    agent_write: require_discussion
+    agent_execute: deny
+    notes: Task scope should be aligned with human intent.
+
+  - glob: "process/decisions/**"
+    required: false
+    owner: shared
+    agent_read: allow
+    agent_write: require_discussion
+    agent_execute: deny
+    notes: Decisions are shared accountability artifacts.
+
+  - glob: "process/runs/**"
+    required: false
+    owner: agent
+    agent_read: allow
+    agent_write: allow
+    agent_execute: deny
+    notes: Run logs are agent-generated and append-friendly.

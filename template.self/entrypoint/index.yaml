@@ -1,0 +1,31 @@
+version: 1
+title: Selfware Workspace Entry Points
+default_goal_file: docs/goal.txt
+default_policy_file: governance/file-contract.yaml
+entries:
+  - id: create_task
+    title: Create Task
+    mode: action
+    action: entrypoint/scripts/new-task.ps1
+    form: entrypoint/forms/new-task.yaml
+    requires_confirmation: true
+    description: Create a new task file under process/tasks/.
+  - id: start_run
+    title: Start Run
+    mode: action
+    action: entrypoint/scripts/new-run.ps1
+    form: entrypoint/forms/new-run.yaml
+    requires_confirmation: true
+    description: Create a run workspace under process/runs/YYYY-MM-DD/RUN-xxx/.
+  - id: implement_feature
+    title: Implement Feature
+    mode: prompt
+    prompt: entrypoint/prompts/implement_feature.md
+    requires_confirmation: true
+    description: Execute a coding task with policy and run logging.
+  - id: review_changes
+    title: Review Changes
+    mode: prompt
+    prompt: entrypoint/prompts/review_changes.md
+    requires_confirmation: true
+    description: Run a risk-focused review before merge or release.
