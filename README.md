@@ -38,6 +38,7 @@ For a quick hands-on experience, try this demo: `https://github.com/awesome-self
 
 - This repository currently contains protocol template documents only.
 - A full runtime/server implementation is not included.
+- This repo is under intensively development.
 
 ## License
 
