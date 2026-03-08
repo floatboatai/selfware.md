@@ -3,7 +3,7 @@
 Use this prompt when a coding task should be executed end-to-end with process records.
 
 Execution contract:
-1. Read `docs/goal.txt`, `governance/file-contract.yaml`, and `runtime/actors.yaml` first.
+1. Read `AGENT_CHARTER.md`, `docs/goal.txt`, `governance/file-contract.yaml`, and `runtime/actors.yaml` first.
 2. Confirm file access policy before any write.
 3. If a target path is `require_discussion`, stop and ask for human confirmation.
 4. Ensure a task file exists in `process/tasks/`.

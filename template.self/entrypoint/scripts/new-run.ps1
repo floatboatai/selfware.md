@@ -8,6 +8,24 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
+function Get-RelativePath {
+    param(
+        [string]$BasePath,
+        [string]$TargetPath
+    )
+
+    $base = [System.IO.Path]::GetFullPath($BasePath)
+    if (-not $base.EndsWith([System.IO.Path]::DirectorySeparatorChar)) {
+        $base += [System.IO.Path]::DirectorySeparatorChar
+    }
+
+    $target = [System.IO.Path]::GetFullPath($TargetPath)
+    $baseUri = New-Object System.Uri($base)
+    $targetUri = New-Object System.Uri($target)
+    $relativeUri = $baseUri.MakeRelativeUri($targetUri)
+    return [System.Uri]::UnescapeDataString($relativeUri.ToString()).Replace('\', '/')
+}
+
 $selfwareRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
 if (-not [System.IO.Path]::IsPathRooted($RunsRoot)) {
     $RunsRoot = Join-Path $selfwareRoot $RunsRoot
@@ -69,5 +87,24 @@ Set-Content -Path (Join-Path $runPath "plan.md") -Encoding UTF8 -Value "# Plan`n
 Set-Content -Path (Join-Path $runPath "decisions.md") -Encoding UTF8 -Value "# Decisions`n"
 Set-Content -Path (Join-Path $runPath "result.md") -Encoding UTF8 -Value "# Result`n"
 New-Item -ItemType File -Path (Join-Path $runPath "log.jsonl") -Force | Out-Null
+
+$appendScript = Join-Path $PSScriptRoot "append-change-record.ps1"
+if (Test-Path $appendScript) {
+    $relativeRunPath = Get-RelativePath -BasePath $selfwareRoot -TargetPath $runPath
+    $createdPaths = @(
+        "$relativeRunPath/manifest.json",
+        "$relativeRunPath/plan.md",
+        "$relativeRunPath/decisions.md",
+        "$relativeRunPath/result.md",
+        "$relativeRunPath/log.jsonl"
+    )
+
+    & $appendScript `
+        -Actor $AgentId `
+        -Intent "start_run" `
+        -Paths $createdPaths `
+        -Summary "Created run workspace $runId for task $TaskId." `
+        -RollbackHint "Delete run workspace directory: $relativeRunPath"
+}
 
 Write-Output "Created run workspace: $runPath"

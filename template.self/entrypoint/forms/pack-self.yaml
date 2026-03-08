@@ -1,0 +1,14 @@
+﻿version: 1
+id: pack_self
+title: Pack Self
+fields:
+  - id: output_path
+    type: text
+    label: Output Path
+    required: false
+    placeholder: dist/template.self
+  - id: force
+    type: text
+    label: Skip Prompt
+    required: false
+    default: false

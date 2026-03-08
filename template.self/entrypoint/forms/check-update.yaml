@@ -1,0 +1,19 @@
+﻿version: 1
+id: check_update
+title: Check Update
+fields:
+  - id: remote_url
+    type: text
+    label: Remote URL
+    required: false
+    placeholder: https://raw.githubusercontent.com/.../selfware.md
+  - id: local_protocol_path
+    type: text
+    label: Local Protocol
+    required: false
+    default: selfware.md
+  - id: apply
+    type: text
+    label: Apply Update
+    required: false
+    default: false

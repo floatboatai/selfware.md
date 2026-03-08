@@ -5,13 +5,21 @@ Primary Objective:
 - Make the workspace executable by both humans and agents via entrypoint definitions and file governance.
 
 Current Sprint Goal:
-- Establish the first collaboration protocol structure.
-- Validate one end-to-end run with entrypoint/scripts/new-task.ps1 and entrypoint/scripts/new-run.ps1.
+- Deliver a runnable `.self` template with canonical `content/` data scope.
+- Support local runtime, pack workflow, update-check flow, and artifact verification flow.
+- Keep bilingual protocol docs synchronized with an executable check.
+- Keep `template.self/` as the single selfware instance root.
+- Use `skills/` as the capability layer and `runtime/actors.yaml` as minimal execution identity.
+- Keep executable automation under `entrypoint/scripts/`.
 
 Constraints:
 - No silent apply for protocol-level changes.
 - Sensitive files (for example, .env) are human-only.
 - Any change to governance/*, entrypoint/*, or selfware*.md requires human discussion.
+
+Session Intent (2026-02-26):
+- Integrate conversation decisions into protocol files, process decisions, and memory change records.
+- Maintain agent-agnostic charter files (`AGENTS.md`, `CLAUDE.md`) with the same governance principles.
 
 Owner: human
 Last-Reviewed: 2026-02-26

@@ -1,0 +1,27 @@
+﻿version: 1
+id: append_change_record
+title: Append Change Record
+fields:
+  - id: actor
+    type: text
+    label: Actor
+    required: false
+    default: default-agent
+  - id: intent
+    type: text
+    label: Intent
+    required: true
+  - id: paths
+    type: text
+    label: Paths CSV
+    required: true
+    placeholder: content/selfware_demo.md,content/memory/changes.md
+  - id: summary
+    type: text
+    label: Summary
+    required: true
+  - id: rollback_hint
+    type: text
+    label: Rollback Hint
+    required: false
+    default: manual

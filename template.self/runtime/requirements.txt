@@ -1,0 +1,2 @@
+# Selfware template runtime dependencies
+# Currently uses only Python stdlib. Add packages here as needed.

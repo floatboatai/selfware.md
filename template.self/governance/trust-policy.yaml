@@ -1,0 +1,21 @@
+﻿version: 1
+description: Local trust policy for artifact verification and runtime safety.
+
+artifact_verification:
+  hash_algorithm: sha256
+  hash_required: true
+  signature_preferred: true
+  signature_required: false
+  detached_signature_formats:
+    - .asc
+    - .sig
+
+runtime_safety:
+  require_loopback_default: true
+  allow_non_loopback_only_with_confirmation: true
+  no_silent_apply: true
+
+update_policy:
+  require_diff_preview: true
+  require_backup_before_apply: true
+  require_user_confirmation: true

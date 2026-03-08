@@ -1,5 +1,5 @@
 version: 1
-description: Runtime actor identities and allowed skill scopes.
+description: Runtime actor identities and allowed scopes for the runnable template.
 
 actors:
   - id: human-owner
@@ -8,21 +8,38 @@ actors:
     policy_ref: governance/file-contract.yaml
     allowed_skills:
       - "*"
+    memory_scope:
+      read:
+        - "**"
+      write:
+        - "**"
 
   - id: default-agent
     type: agent
-    description: General implementation and review agent.
+    description: General implementation and review agent with canonical-data write scope.
     policy_ref: governance/file-contract.yaml
     allowed_skills:
       - "*"
     memory_scope:
       read:
+        - AGENT_CHARTER.md
+        - AGENTS.md
+        - CLAUDE.md
+        - manifest.md
         - docs/**
         - entrypoint/**
         - governance/**
         - runtime/**
         - process/**
+        - content/**
         - selfware*.md
         - README*
       write:
+        - content/**
+        - process/tasks/**
         - process/runs/**
+    confirmation_required_actions:
+      - pack_self
+      - check_update_apply
+      - protocol_change
+      - send_context

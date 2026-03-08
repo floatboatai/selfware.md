@@ -1,0 +1,18 @@
+﻿version: 1
+id: verify_artifact
+title: Verify Artifact
+fields:
+  - id: artifact_path
+    type: text
+    label: Artifact Path
+    required: true
+  - id: expected_sha256
+    type: text
+    label: Expected SHA256
+    required: false
+    placeholder: optional; fallback to artifact.sha256
+  - id: signature_file
+    type: text
+    label: Signature File
+    required: false
+    placeholder: optional detached signature (.asc/.sig)

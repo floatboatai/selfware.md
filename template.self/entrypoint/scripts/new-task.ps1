@@ -10,6 +10,24 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
+function Get-RelativePath {
+    param(
+        [string]$BasePath,
+        [string]$TargetPath
+    )
+
+    $base = [System.IO.Path]::GetFullPath($BasePath)
+    if (-not $base.EndsWith([System.IO.Path]::DirectorySeparatorChar)) {
+        $base += [System.IO.Path]::DirectorySeparatorChar
+    }
+
+    $target = [System.IO.Path]::GetFullPath($TargetPath)
+    $baseUri = New-Object System.Uri($base)
+    $targetUri = New-Object System.Uri($target)
+    $relativeUri = $baseUri.MakeRelativeUri($targetUri)
+    return [System.Uri]::UnescapeDataString($relativeUri.ToString()).Replace('\', '/')
+}
+
 $selfwareRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
 if (-not [System.IO.Path]::IsPathRooted($OutputDir)) {
     $OutputDir = Join-Path $selfwareRoot $OutputDir
@@ -56,4 +74,16 @@ $content = @"
 "@
 
 Set-Content -Path $path -Value $content -Encoding UTF8
+
+$appendScript = Join-Path $PSScriptRoot "append-change-record.ps1"
+if (Test-Path $appendScript) {
+    $relativeTaskPath = Get-RelativePath -BasePath $selfwareRoot -TargetPath $path
+    & $appendScript `
+        -Actor $Owner `
+        -Intent "create_task" `
+        -Paths @($relativeTaskPath) `
+        -Summary "Created task file $TaskId." `
+        -RollbackHint "Delete task file: $relativeTaskPath"
+}
+
 Write-Output "Created task file: $path"

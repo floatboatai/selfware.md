@@ -1,0 +1,19 @@
+﻿version: 1
+id: run_app
+title: Run App
+fields:
+  - id: host
+    type: text
+    label: Host
+    required: false
+    default: 127.0.0.1
+  - id: port
+    type: text
+    label: Port
+    required: false
+    default: 5273
+  - id: allow_non_loopback
+    type: text
+    label: Allow Non Loopback
+    required: false
+    default: false

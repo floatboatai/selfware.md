@@ -1,0 +1,43 @@
+﻿version: 1
+description: Runtime capability declaration for the runnable template instance.
+
+write_scope:
+  - content/**
+
+confirmation_required:
+  - pack_self
+  - check_update_apply
+  - publish
+  - send_context
+  - protocol_change
+
+endpoints:
+  - method: GET
+    path: /api/content
+    purpose: Read canonical demo content.
+  - method: POST
+    path: /api/save
+    purpose: Write canonical demo content.
+  - method: GET
+    path: /api/self
+    purpose: Return local protocol hash and content.
+  - method: GET
+    path: /api/manifest
+    purpose: Return manifest content.
+  - method: GET
+    path: /api/capabilities
+    purpose: Return capability declaration.
+  - method: GET
+    path: /api/check_update
+    purpose: Compare local and remote protocol hash.
+
+modules:
+  git: optional
+  discovery: optional
+  self_analysis: optional
+  trust_verification: enabled
+
+policies:
+  loopback_only: true
+  no_silent_apply: true
+  change_record_file: content/memory/changes.md

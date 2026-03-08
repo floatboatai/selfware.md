@@ -14,17 +14,49 @@ defaults:
   agent_execute: deny
 
 required_paths:
+  - AGENT_CHARTER.md
+  - AGENTS.md
+  - CLAUDE.md
   - docs/goal.txt
+  - manifest.md
   - entrypoint/index.yaml
   - governance/file-contract.yaml
+  - governance/trust-policy.yaml
+  - runtime/capabilities.yaml
+  - content/memory/changes.md
 
 optional_paths:
   - skills/**
   - process/runs/**
   - process/decisions/**
   - process/tasks/**
+  - content/**
 
 rules:
+  - glob: "AGENT_CHARTER.md"
+    required: true
+    owner: shared
+    agent_read: allow
+    agent_write: require_discussion
+    agent_execute: deny
+    notes: Canonical cross-agent principles.
+
+  - glob: "AGENTS.md"
+    required: true
+    owner: shared
+    agent_read: allow
+    agent_write: require_discussion
+    agent_execute: deny
+    notes: Shared agent entrypoint and policy pointer.
+
+  - glob: "CLAUDE.md"
+    required: true
+    owner: shared
+    agent_read: allow
+    agent_write: require_discussion
+    agent_execute: deny
+    notes: Shared agent entrypoint and policy pointer.
+
   - glob: ".env*"
     required: false
     owner: human
@@ -40,6 +72,14 @@ rules:
     agent_write: require_discussion
     agent_execute: deny
     notes: Goal updates require explicit human discussion.
+
+  - glob: "manifest.md"
+    required: true
+    owner: shared
+    agent_read: allow
+    agent_write: require_discussion
+    agent_execute: deny
+    notes: Manifest controls canonical scope and packing boundaries.
 
   - glob: "entrypoint/**"
     required: true
@@ -73,6 +113,22 @@ rules:
     agent_execute: deny
     notes: Actor identity and permissions are trust boundaries.
 
+  - glob: "runtime/capabilities.yaml"
+    required: true
+    owner: shared
+    agent_read: allow
+    agent_write: require_discussion
+    agent_execute: deny
+    notes: Runtime capability declarations are security boundaries.
+
+  - glob: "runtime/server.py"
+    required: true
+    owner: shared
+    agent_read: allow
+    agent_write: require_discussion
+    agent_execute: allow
+    notes: Runtime entrypoint is executable and must remain review-gated.
+
   - glob: "selfware*.md"
     required: true
     owner: shared
@@ -80,6 +136,22 @@ rules:
     agent_write: require_discussion
     agent_execute: deny
     notes: Protocol authority files should not be silently modified.
+
+  - glob: "content/memory/changes.md"
+    required: true
+    owner: shared
+    agent_read: allow
+    agent_write: allow
+    agent_execute: deny
+    notes: Append-only change log for auditable writes.
+
+  - glob: "content/**"
+    required: false
+    owner: human
+    agent_read: allow
+    agent_write: allow
+    agent_execute: deny
+    notes: Canonical data scope for user-approved runtime and agent writes.
 
   - glob: "skills/**"
     required: false

@@ -6,17 +6,74 @@ entries:
   - id: create_task
     title: Create Task
     mode: action
-    action: entrypoint/scripts/new-task.ps1
+    action:
+      windows: entrypoint/scripts/new-task.ps1
+      posix: entrypoint/scripts/new-task.sh
     form: entrypoint/forms/new-task.yaml
     requires_confirmation: true
     description: Create a new task file under process/tasks/.
   - id: start_run
     title: Start Run
     mode: action
-    action: entrypoint/scripts/new-run.ps1
+    action:
+      windows: entrypoint/scripts/new-run.ps1
+      posix: entrypoint/scripts/new-run.sh
     form: entrypoint/forms/new-run.yaml
     requires_confirmation: true
     description: Create a run workspace under process/runs/YYYY-MM-DD/RUN-xxx/.
+  - id: run_app
+    title: Run App
+    mode: action
+    action:
+      windows: entrypoint/scripts/run-app.ps1
+      posix: entrypoint/scripts/run-app.sh
+    form: entrypoint/forms/run-app.yaml
+    requires_confirmation: true
+    description: Start the local runtime web app on loopback.
+  - id: pack_self
+    title: Pack Self
+    mode: action
+    action:
+      windows: entrypoint/scripts/pack-self.ps1
+      posix: entrypoint/scripts/pack-self.sh
+    form: entrypoint/forms/pack-self.yaml
+    requires_confirmation: true
+    description: Build a distributable .self zip container from manifest rules.
+  - id: append_change_record
+    title: Append Change Record
+    mode: action
+    action:
+      windows: entrypoint/scripts/append-change-record.ps1
+      posix: entrypoint/scripts/append-change-record.sh
+    form: entrypoint/forms/append-change-record.yaml
+    requires_confirmation: true
+    description: Append an auditable change record to content/memory/changes.md.
+  - id: check_update
+    title: Check Update
+    mode: action
+    action:
+      windows: entrypoint/scripts/check-update.ps1
+      posix: entrypoint/scripts/check-update.sh
+    form: entrypoint/forms/check-update.yaml
+    requires_confirmation: true
+    description: Check remote protocol updates with diff preview and optional apply.
+  - id: check_protocol_sync
+    title: Check Protocol Sync
+    mode: action
+    action:
+      windows: entrypoint/scripts/check-protocol-sync.ps1
+      posix: entrypoint/scripts/check-protocol-sync.sh
+    requires_confirmation: false
+    description: Verify numbered sections and version alignment between EN and ZH docs.
+  - id: verify_artifact
+    title: Verify Artifact
+    mode: action
+    action:
+      windows: entrypoint/scripts/verify-artifact.ps1
+      posix: entrypoint/scripts/verify-artifact.sh
+    form: entrypoint/forms/verify-artifact.yaml
+    requires_confirmation: true
+    description: Verify artifact hash and optional detached signature.
   - id: implement_feature
     title: Implement Feature
     mode: prompt
